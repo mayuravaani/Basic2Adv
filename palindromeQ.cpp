@@ -1,3 +1,10 @@
+/* This question is solved by only using 
+	string operations,
+	loops,
+	conditional statement,
+	1-D Array
+*/
+
 #include <iostream>
 using namespace std;
 
@@ -15,9 +22,9 @@ bool isPalindrome(string str) {
 	if that is already exist then 
 		the return value will be >=0
 	Otherwise the return value is -1 */
-int findPosition(string array[], string str, int size) {
+int findPosition(string array[], string sub, int size) {
 	for(int i = 0; i < size; i++) {
-		if(array[i] == str) {
+		if(array[i] == sub) {
 			return i;
 		}
 	}
@@ -35,11 +42,16 @@ void printResults(string a[], int b[], int c[], int maxIndex) {
 //find the length of the given array
 int arraylength(string str) {
 	int len = 0;
-	int i = 1;
+	/*int i = 1;
 	while(i <= str.length()) {
 		len = len + i;
 		i++;
 	}
+	  */ 
+	for(int i=1; i <= str.length(); i++) {
+		len = len + i;
+	}
+	cout << len;
 	return len;
 }
 
@@ -61,9 +73,9 @@ int main() {
 	cin >> str;
 	
 	// define the array for the substring,no_of_occurrence for the respected substring, points
-	string substr[arraylength(str)];
-	int times[arraylength(str)];
-	int points[arraylength(str)];
+	string substr[str.length()];// sustring == palindrome 
+	int times[str.length()]; // count 
+	int points[str.length()];// points = [len(substring x count)
 	
 	// temporary variable for storing a subsstring
 	string temp;
@@ -80,13 +92,12 @@ int main() {
 		otherwise
 			create a new substring value in the substr array and insert 1 at the respected times array value
 	 if it is not a palindrome do nothing */
-	
 	for(int i = 0; i < str.length(); i++) {
 		temp = "";
 		for(int k=i; k < str.length(); k++) {
-			temp = temp + str[k];
+			temp = temp + str[k];  
 			if(isPalindrome(temp)) {
-				int pos = findPosition(substr, temp, sizeof(substr)/sizeof(substr[0]));
+				int pos = findPosition(substr, temp, maxIndex);
 				if(pos >= 0) {
 					times[pos] = times[pos] + 1;
 				} else{
@@ -97,6 +108,7 @@ int main() {
 				}
 			}
 		}
+		
 	}
 	
 	// to find the value of occurrence = [length(substring) x no_of_occurrence]
@@ -107,8 +119,6 @@ int main() {
 	//to print all the substring and associated values
 	printResults(substr, times, points, maxIndex);
 	
-	//find the maximum of the point;
-	int maxPoints = findMax(points, maxIndex);
 		
-	cout << "Output max: " << maxPoints;	
+	cout << "Output max: " << findMax(points, maxIndex);	
 }
